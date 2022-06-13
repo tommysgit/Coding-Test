@@ -1,0 +1,39 @@
+import math
+def solution(brown, yellow):
+    answer = []
+    # 가로길이 >= 세로길이
+    carpet = brown + yellow
+    for i in range(3, int(carpet//2)):
+        share, rest = divmod(carpet, i)
+        if rest != 0 :
+            continue
+        
+        width = max(i, share)
+        vertical = min(i, share)
+        carpet_sum = width*vertical
+        cur_yellow = (width-2) * (vertical-2)
+        cur_brown = carpet_sum - cur_yellow
+        if cur_brown == brown and cur_yellow == yellow:
+            answer.append(width)
+            answer.append(vertical)
+            break
+#         is_break = 0
+#         for j in range(2):
+#             vertical = i
+#             width = i+j
+            
+#             carpet_sum = width*vertical
+#             cur_yellow = (width-2) * (vertical-2)
+#             cur_brown = carpet_sum - cur_yellow
+#             print(width, vertical, cur_yellow, cur_brown)
+#             if cur_brown == brown and cur_yellow == yellow:
+#                 answer.append(width)
+#                 answer.append(vertical)
+#                 is_break = 1
+#                 break
+#         if is_break == 1:
+#             break
+    
+
+    return answer
+# 3,3 1 / 4,3 2 / 4,4 4 / 5,4 6 / 5,5 9
