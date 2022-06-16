@@ -1,0 +1,28 @@
+def solution(numbers, target):
+    answer = []
+    visited = [0]*len(numbers)
+    def dfs(stack, n, start):
+        if len(stack) == n:
+            tmp = []
+            for i in range(len(numbers)):
+                if i in stack:
+                    tmp.append(-numbers[i])
+                else:
+                    tmp.append(numbers[i])
+            if target == sum(tmp):
+                answer.append(1)
+            return 
+        for  i in range(start, len(numbers)):
+            if not visited[i]:
+
+                stack.append(i)
+                visited[i] = 1
+                dfs(stack, n, i+1)
+                stack.pop()
+                visited[i] = 0
+    for i in range(len(numbers)):
+        stack = []
+        number_sum = dfs(stack, i+1, 0)
+        if number_sum == target:
+            answer +=1
+    return sum(answer)
