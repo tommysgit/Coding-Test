@@ -1,0 +1,17 @@
+def solution(participant, completion):
+    answer = ''
+    # participant 참여자 리스트, completion 완주자 리스트
+    com_dict = {}
+    for i in participant:
+        if i in com_dict:
+            com_dict[i] += 1
+        else:
+            com_dict[i] = 1
+    for i in completion:
+        com_dict[i] -=1
+    for i in com_dict.items():
+        if i[1] == 1:
+            answer = i[0]
+            break
+
+    return answer
