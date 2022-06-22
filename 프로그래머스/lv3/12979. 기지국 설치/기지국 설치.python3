@@ -1,0 +1,19 @@
+def solution(n, stations, w):
+    answer = 0
+    # 현재 station 값의 w만큼 좌우로 전파가 터짐
+    cur = 0
+    # stations를 돌면서 최솟값과 최댓값만큼 길이를 계속 잘라 준다.
+    for i in stations:
+        cut = (i-w) - cur - 1
+        cur = (i+w)
+        share, rest = divmod(cut, w*2+1)
+        answer += share
+        if rest>0:
+            answer+=1
+    if cur < n:
+        share, rest = divmod(n - cur, w*2+1)
+        answer += share
+        if rest>0:
+            answer+=1
+        
+    return answer
