@@ -1,0 +1,27 @@
+def solution(id_list, report, k):
+    answer = [0] * (len(id_list))
+    report = list(set(report))
+    count = [0] * (len(id_list))
+    # 
+    check = [[0]*len(id_list) for i in range(len(id_list))]
+
+    # for i in id_list:
+    #     check[i] = [0]*len(id_list)
+    for i in report:
+        tmp = i.split()
+        idx1 = id_list.index(tmp[0]) # 신고자
+        idx2 = id_list.index(tmp[1]) # 신고 당한 자
+        #print(idx1, idx2, tmp[0], tmp[1])
+        if check[idx2][idx1] == 0:
+            check[idx2][idx1] += 1
+        count[idx2] += 1
+        #check[tmp[0]][idx] +=1
+    #print(check, count)
+    for i in range(len(count)):
+        if count[i] >= k:
+            for j in range(len(check[i])):
+                if check[i][j]>0:
+                    answer[j] += 1
+
+
+    return answer
