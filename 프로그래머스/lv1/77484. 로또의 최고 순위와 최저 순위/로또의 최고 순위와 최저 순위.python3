@@ -1,0 +1,30 @@
+def solution(lottos, win_nums):
+    count = 0
+    answer = [0]*2
+    # 가지고 있는 로또 번호에서 0번을 제외하고 맞는 개수를 확인
+    non_zero = []
+    zero = []
+    for i in lottos:
+        if i == 0:
+            zero.append(i)
+        else:
+            non_zero.append(i)
+    for i in non_zero:
+        if i in win_nums:
+            count += 1
+    def check_num(count):
+        if count == 6:
+            return 1
+        elif count == 5 :
+            return 2
+        elif count == 4 :
+            return 3
+        elif count == 3 :
+            return 4
+        elif count == 2 :
+            return 5
+        else:
+            return 6
+    answer[0] = check_num(count+len(zero))
+    answer[1] = check_num(count)
+    return answer
