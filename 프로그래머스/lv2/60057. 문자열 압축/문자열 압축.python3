@@ -1,0 +1,36 @@
+import re
+def solution(s):
+    answer = 1000
+    def cnt_str(stack, result):
+        cnt = 0
+        while stack:
+            cnt += 1
+            if len(stack) == 1:
+                if cnt>1:
+                    result.append(str(cnt) + stack.pop())
+                else:
+                    result.append(stack.pop())
+            else:
+                stack.pop()
+    # 문자열 s를 앞에서 부터 
+    def find_const_str(s, length):
+          tmp = [s[i:i+length] for i in range(0, len(s), length)]
+          stack = []
+          stack.append(tmp[0])
+          result = []
+          for i in range(1, len(tmp)):
+                if stack[-1] == tmp[i]:
+                    stack.append(tmp[i])
+                else:
+                    cnt_str(stack, result)
+                    stack.append(tmp[i])
+          cnt_str(stack, result)
+          return ''.join(result)
+    if len(s) > 1:
+       for i in range(1, (len(s))//2 + 1):
+        tmp_s = find_const_str(s, i)
+        if len(tmp_s) < answer:
+            answer = len(tmp_s) 
+    else:
+         answer = 1   
+    return answer
