@@ -1,0 +1,27 @@
+def solution(numbers, hand):
+    answer = ''
+    my_dict = {'1' : (0,0), '2' : (0,1), '3' : (0,2), '4' : (1,0), '5' : (1,1), '6' : (1,2), '7' : (2,0),
+              '8': (2,1), '9' : (2,2), '*' : (3,0), '0' : (3,1), '#' : (3,2)}
+
+    L = (3,0)
+    R = (3,2)
+    #print(my_dict['9'][0])
+    for i in range(len(numbers)):
+        num = str(numbers[i])
+        L_distance = abs(my_dict[num][0] - L[0]) + abs(my_dict[num][1] - L[1])
+        R_distance = abs(my_dict[num][0] - R[0]) + abs(my_dict[num][1] - R[1])
+        if num in "147":
+            answer += 'L'
+            L = my_dict[num]
+        elif num in "369":
+            answer += 'R'
+            R = my_dict[num]
+        else:
+            
+            if L_distance < R_distance or (L_distance == R_distance and hand == "left"):
+                answer += 'L'
+                L = my_dict[num]
+            elif L_distance > R_distance or (L_distance == R_distance and hand == "right"):
+                answer += 'R'
+                R = my_dict[num]
+    return answer
