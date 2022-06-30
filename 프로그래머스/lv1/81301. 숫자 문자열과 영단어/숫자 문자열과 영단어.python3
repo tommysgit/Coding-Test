@@ -1,0 +1,47 @@
+def solution(s):
+    num = ''
+    i = 0
+    while i<len(s):
+        if s[i].isdigit():
+            num += s[i]
+            i += 1
+            continue
+        else:
+            three_num = s[i:i+3]
+            four_num = s[i:i+4]
+            five_num = s[i:i+5]
+            if three_num == "one":
+                num += '1'
+                i += 3
+            elif three_num == "two":
+                num += '2'
+                i += 3
+            elif three_num == "six":
+                num += '6'
+                i += 3
+            elif four_num == "zero":
+                num += '0'
+                i += 4
+                
+            elif four_num == "four":
+                num += '4'
+                i += 4
+            elif four_num == "five":
+                num += '5'
+                i += 4
+            elif four_num == "nine":
+                num += '9'
+                i += 4
+            elif five_num == "seven":
+                num += '7'
+                i += 5
+            elif five_num == "three":
+                num += '3'
+                i += 5
+            else:
+                num += '8'
+                i += 5
+
+            
+    answer = int(num)
+    return answer
