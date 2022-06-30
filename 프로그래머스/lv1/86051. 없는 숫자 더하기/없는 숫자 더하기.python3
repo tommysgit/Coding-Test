@@ -1,0 +1,11 @@
+def solution(numbers):
+    answer = -1
+    num = [0] * 10
+    for i in numbers:
+        num[i] = 1
+    sum = 0
+    print(num)
+    for i in range(len(num)):
+        if num[i] == 0:
+            sum += i
+    return sum
