@@ -1,0 +1,17 @@
+def solution(board, moves):
+    answer = 0
+    stack = []
+    for i in range(len(moves)):
+        pick = moves[i] - 1
+        for j in range(len(board)):
+            if board[j][pick] != 0:
+                
+                if stack and stack[-1] == board[j][pick]:
+                    stack.pop()
+                    answer += 2
+                else:
+                    stack.append(board[j][pick])
+                board[j][pick] = 0
+                break
+        
+    return answer
