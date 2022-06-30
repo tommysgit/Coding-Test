@@ -1,0 +1,27 @@
+def solution(record):
+    answer = []
+    # 문자열의 첫 단어는 Enter, Leave, Change 세 가지이고 두 번째는 pk 세 번째는 닉네임
+    my_hash = {}
+    orders = []
+    for i in range(len(record)):
+        if "Leave" not in record[i]:
+            order, pk, nickname = record[i].split()
+            my_hash[pk] = nickname
+        else:
+            order, pk = record[i].split()
+        orders.append((order, pk))
+        # if order == "Enter":
+        #     answer.append(nickname + "님이 들어왔습니다.")
+        # elif order == "Leave":
+        #     answer.append(nickname + "님이 나갔습니다.")
+        # else:
+            
+    for i in orders:
+        if "Change" in i:
+            continue
+        order, pk = i
+        if order == "Enter":
+            answer.append(my_hash[pk] + "님이 들어왔습니다.")
+        else:
+            answer.append(my_hash[pk] + "님이 나갔습니다.")
+    return answer
