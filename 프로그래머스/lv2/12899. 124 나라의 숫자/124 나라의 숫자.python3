@@ -1,0 +1,29 @@
+from collections import deque
+def solution(n):
+    answer = ''
+    share, rest = divmod(n, 3)
+    queue = deque()
+    def batch_num(share, rest):
+        if rest == 1:
+            queue.append('1')
+        elif rest == 2:
+            queue.append('2')
+        else:
+            queue.append('4')
+            share -= 1
+        return share
+    while share>3:
+        share =batch_num(share,rest)
+        share, rest = divmod(share, 3)
+    share = batch_num(share,rest)
+    if share == 3:
+        queue.append('4')
+    elif share == 2:
+        queue.append('2')
+    elif share == 1:
+        queue.append('1')
+    while queue:
+        answer += queue.pop()
+    print(queue)
+    # 12 -> 4 , 0 -> 1 , 1. -> 4
+    return answer
