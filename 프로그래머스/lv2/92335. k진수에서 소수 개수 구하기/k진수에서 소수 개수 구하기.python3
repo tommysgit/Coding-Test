@@ -1,0 +1,41 @@
+import math
+def solution(n, k):
+    answer = 0
+    changed_num = str(n)
+    # n을 k진수로 변환
+    def change_decimal(n, k):
+        stack = []
+        result = ''
+        while n >= k:
+            n, rest = divmod(n, k)
+            stack.append(str(rest))
+        if n != 0:
+            stack.append(str(n))
+        while stack:
+            result += stack.pop()
+        return result
+    def prime_num(n):
+        if n == 1:
+            return False
+        for i in range(2, int(math.sqrt(n) + 1)):
+            if n % i == 0:
+                return False
+        return True
+    def check(tmp_num, answer):
+        if tmp_num:
+                num = ''.join(str(s) for s in (tmp_num))
+                if prime_num(int(num)):
+                    answer += 1
+                tmp_num.clear()
+        return answer
+    if k != 10:
+        changed_num = change_decimal(n,k)
+    tmp_num = []
+    for i in range(len(changed_num)):
+        if changed_num[i] == '0':
+            answer = check(tmp_num, answer)
+            continue
+        tmp_num.append(changed_num[i])
+    answer = check(tmp_num, answer)
+    
+    return answer
