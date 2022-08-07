@@ -1,43 +1,31 @@
 # 1967
-import heapq
-
-
+import sys
+sys.setrecursionlimit(10**6)
 n = int(input())
-edge = []
-INF = (1e9)
-max_cost = 0
 graph = [[] for i in range(n+1)]
-def dijkstra(start, cost):
-    global max_cost
-    q = []
-    heapq.heappush(q, (start, 0))
-    cost[start] = 0
-    max_idx = 0
-    while q:
-        # 현재 노드의 번호와 start와의 거리값
-        now, dist = heapq.heappop(q)
-        # 이미 다른노드를 거친 값이 더 작은경우 건너뛴다.
-        if cost[now] < dist:
-            continue
-        # now에 있는 그래프 순환
-        for node in graph[now]:
-            # 기존 now까지 거리 + now와 연결된 노드의 거리를 합하여 최단거리 최신화
-            new_dist = dist + node[1]
-            if new_dist < cost[node[0]]: # 새로운 거리가 기존 거리보다 짧으면 갱신
-                if max_cost < new_dist:
-                    max_cost = new_dist
-                    max_idx = node[0]
-                cost[node[0]] = new_dist
-                heapq.heappush(q, (node[0], new_dist))
-   #max_cost = max(max_cost, max(cost[1:]))
-    #print(max_idx, max_cost)
-    return max_idx
 for i in range(n-1):
-    a, b, cost = map(int, input().split())
-    graph[a].append((b,cost))
-    graph[b].append((a,cost))
-
-# 루트에서 최장거리와 최장거리에서 최장거리
-max_dist = dijkstra(1, [INF] * (n+1))
-dijkstra(max_dist, [INF] * (n+1))
+    a, b, c = map(int, input().split())
+    graph[a].append((b,c))
+max_cost = 0
+# 각 노드별로 왼쪽과 오른쪽의 최장거리를 구하고 거리가 최대가 되는 노드를 택한다
+def dfs(i, cost):
+    global max_cost
+    # i번째 노드를 방문
+    # i번째 노드의 좌 우 최장거리는 아직 0
+    left, right = 0, 0
+    # i번째 노드와 연결된 좌우 노드를 탐색
+    for next_node, dist in graph[i]:
+        # 연결된 다음 노드의 최대 비용을 반환
+        new_cost = dfs(next_node, dist)
+        # 연결된 자식 노드의 개수가 1개일 경우 왼쪽으로
+        # 2개일 경우 오른쪽으로
+        # 3개 이상일 경우 왼쪽 오른쪽중 거리가 더 작은 곳을 갱신한다.
+        if left <= right:
+            left = max(left, new_cost)
+        else:
+            right = max(right, new_cost)
+    # 해당 노드 기준 최장거리와 기존 최장거리를 비교하여 갱신
+    max_cost = max(max_cost, left+right)
+    return max(left+cost, right+cost)
+dfs(1, 0)
 print(max_cost)
