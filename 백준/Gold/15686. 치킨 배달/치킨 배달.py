@@ -1,23 +1,31 @@
 from itertools import combinations
+
+INF = 1e9
 N, M = map(int, input().split())
-graph = [list(map(int, input().split())) for i in range(N)]
-house_list = []
+graph = []
+houst_list = []
 chicken_list = []
-for i in range(N):
-    for j in range(N):
-        if graph[i][j] == 1:
-            house_list.append((i,j))
-        if graph[i][j] == 2:
-            chicken_list.append((i,j))
-min_chicken_distance = 10000
-for i in combinations(chicken_list, M):
-    i_distance_sum = 0
-    for j in range(len(house_list)):
-        min_distance = 10000
-        house_r, house_c = house_list[j]
-        for k in range(M):
-            chicken_r , chicken_c = i[k]
-            min_distance = min(min_distance, abs(house_r - chicken_r) + abs(house_c - chicken_c))
-        i_distance_sum += min_distance
-    min_chicken_distance = min(min_chicken_distance, i_distance_sum)
-print(min_chicken_distance)
+answer = INF
+def cal(chicken):
+    global answer
+    dist_sum = 0
+    for hr, hc in houst_list:
+        dist = INF
+        for cr, cc in chicken:
+            dist = min(dist, abs(hr-cr) + abs(hc-cc))
+        dist_sum += dist
+    answer = min(answer, dist_sum)
+                        
+
+        
+    
+for r in range(N):
+    row = list(map(int, input().split()))
+    for c in range(N):
+        if row[c] == 1:
+            houst_list.append((r,c))
+        elif row[c] == 2:
+            chicken_list.append((r,c))
+for combi in combinations(chicken_list, M):
+    cal(combi)
+print(answer) 
